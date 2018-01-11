@@ -17,6 +17,10 @@ Plugin 'jalcine/cmake.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tikhomirov/vim-glsl'
+Plugin 'pangloss/vim-javascript'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'leafgarland/typescript-vim'
+
 
 call vundle#end()
 syntax enable
@@ -27,6 +31,7 @@ set noeb vb t_vb=
 
 set number
 set cursorline
+set autoindent
 
 "colorscheme spacegray
 colorscheme zenburn
