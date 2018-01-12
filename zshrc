@@ -6,6 +6,8 @@ source $ZSH_CONFIG/antigen.zsh
 
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle mafredri/zsh-async
+antigen bundle sindresorhus/pure
 
 antigen apply
 
@@ -18,7 +20,7 @@ bindkey '^K' history-substring-search-down
 # Set up the prompt
 autoload -Uz promptinit
 promptinit
-prompt pure
+# prompt pure
 
 setopt histignorealldups sharehistory
 
