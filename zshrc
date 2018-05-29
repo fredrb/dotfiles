@@ -1,5 +1,7 @@
 ZSH_CONFIG=~/config/zsh
 
+# zmodload zsh/zprof
+
 source $ZSH_CONFIG/antigen.zsh
 
 # Plugins
@@ -54,14 +56,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # Aliases
 
 alias ls='ls --color=auto'
-alias ll='ls -la --color=auto'
+alias ll='ls -lah --color=auto'
+alias ws='cd ~/workspaces'
+alias llr='ls -lah --color=always | less -r'
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-# Add NVM to PATH
-export NVM_DIR="$HOME/.config/nvm"
-if [ -d "$NVM_DIR" ]; then
-	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
+# zprof
