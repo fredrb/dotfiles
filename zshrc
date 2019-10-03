@@ -1,6 +1,13 @@
 ZSH_CONFIG=~/config/zsh
 
-# zmodload zsh/zprof
+#zmodload zsh/zprof
+
+# Determine if on WSL
+if grep -q Microsoft /proc/version; then
+	ON_WSL=1
+else
+	ON_WSL=0
+fi
 
 source $ZSH_CONFIG/antigen.zsh
 
@@ -33,7 +40,18 @@ HISTFILE=~/.zsh_history
 
 # Use modern completion system
 autoload -Uz compinit
-compinit
+if [[ $ON_WSL == 0 ]]; then
+	compinit
+else
+	# Save completion to cache since it takes too much time to load on WSL
+	current=$ZSH_CONFIG/.zcompdump-$(date '+%Y%m%d')
+	if [ -f $current ]; then
+		compinit -C $current
+	else
+		rm $ZSH_CONFIG/.zcompdump-* 2>/dev/null
+		compinit -d $current
+	fi
+fi
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
