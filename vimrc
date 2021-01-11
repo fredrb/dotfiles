@@ -20,6 +20,9 @@ Plugin 'tikhomirov/vim-glsl'
 Plugin 'pangloss/vim-javascript'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'rust-lang/rls'
+Plugin 'davidhalter/jedi-vim'
 
 
 call vundle#end()
