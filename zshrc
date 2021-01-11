@@ -2,13 +2,6 @@ ZSH_CONFIG=~/config/zsh
 
 #zmodload zsh/zprof
 
-# Determine if on WSL
-if grep -q Microsoft /proc/version; then
-	ON_WSL=1
-else
-	ON_WSL=0
-fi
-
 source $ZSH_CONFIG/antigen.zsh
 
 # Plugins
@@ -27,8 +20,8 @@ bindkey '^J' history-substring-search-up
 bindkey '^K' history-substring-search-down
 
 # Set up the prompt
-autoload -Uz promptinit
-promptinit
+#autoload -Uz promptinit
+#promptinit
 # prompt pure
 
 setopt histignorealldups sharehistory
@@ -40,18 +33,7 @@ HISTFILE=~/.zsh_history
 
 # Use modern completion system
 autoload -Uz compinit
-if [[ $ON_WSL == 0 ]]; then
-	compinit
-else
-	# Save completion to cache since it takes too much time to load on WSL
-	current=$ZSH_CONFIG/.zcompdump-$(date '+%Y%m%d')
-	if [ -f $current ]; then
-		compinit -C $current
-	else
-		rm $ZSH_CONFIG/.zcompdump-* 2>/dev/null
-		compinit -d $current
-	fi
-fi
+compinit
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -78,4 +60,9 @@ alias ll='ls -lah --color=auto'
 alias ws='cd ~/workspaces'
 alias llr='ls -lah --color=always | less -r'
 
+export TERM=xterm-256color
+
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # zprof
+

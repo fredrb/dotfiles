@@ -17,6 +17,9 @@ Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'tpope/vim-fireplace'
+Plug 'wakatime/vim-wakatime'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -53,19 +56,24 @@ nmap Y <Plug>(operator-flashy)$
 let g:operator#flashy#flash_time=300
 
 "NERDTree
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <C-f>n :NERDTreeToggle<CR>
+nnoremap <C-f>f :NERDTreeFind<CR>
 
 "FZF
-map <C-P>p :Files<CR>
-map <C-P>g :GFiles<CR>
-map <C-P>b :Buffers<CR>
+map <C-P> :Files<CR>
+"map <C-P>g :GFiles<CR>
+"map <C-P>b :Buffers<CR>
+"map <C-P>a :Ag<CR>
+"map <C-P>l :Lines<CR>
+map <C-A>a :Ag<CR>
+map <C-A>l :Lines<CR>
+map <C-A>k :Buffers<CR>
 
 " Visual Multi
 " let g:VM_maps = {}
-let g:VM_maps = {}
-let g:VM_maps['Find Under']         = '<C-A>'           " replace C-n
-let g:VM_maps['Find Subword Under'] = '<C-A>'           " replace visual C-n
+"let g:VM_maps = {}
+"let g:VM_maps['Find Under']         = '<A-D>'           " replace C-n
+"let g:VM_maps['Find Subword Under'] = '<A-D>'           " replace visual C-n
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -75,16 +83,19 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['~/.local/bin/pyls'],
     \ }
 
 nmap <F5> <Plug>(lcn-menu)
 " Or map each action separately
 nmap <silent>K <Plug>(lcn-hover)
 nmap <silent> gd <Plug>(lcn-definition)
+nmap <silent> gr <Plug>(lcn-references)
+nmap <silent> gf <Plug>(lcn-format)
 nmap <silent> <F2> <Plug>(lcn-rename)
 
 " Seconds until language server updates after file changed 
-let g:LanguageClient_changeThrottle = 1
+"let g:LanguageClient_changeThrottle = 1
 
 
 " =============================================================================
@@ -130,10 +141,21 @@ set noexpandtab
 set termguicolors
 set background=dark
 let base16colorspace=256
-let g:base16_shell_path="~/dev/others/base16/templates/shell/scripts/"
 colorscheme base16-gruvbox-dark-hard
 syntax on
 hi Normal ctermbg=NONE
 " Brighter comments
 call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
 
+" Functions
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-n>"
+    endif
+endfunction
+
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
