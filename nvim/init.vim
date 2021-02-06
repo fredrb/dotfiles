@@ -19,6 +19,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-fireplace'
 Plug 'wakatime/vim-wakatime'
+Plug 'tasn/vim-tsx'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " Autocomplete
@@ -84,6 +85,10 @@ set hidden
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'python': ['~/.local/bin/pyls'],
+    \ 'javascript': ['flow', 'lsp'],
+    \ 'typescript': ['typescript-language-server', '--stdio'],
+    \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
+    \ 'go': ['gopls'],
     \ }
 
 nmap <F5> <Plug>(lcn-menu)
@@ -93,6 +98,8 @@ nmap <silent> gd <Plug>(lcn-definition)
 nmap <silent> gr <Plug>(lcn-references)
 nmap <silent> gf <Plug>(lcn-format)
 nmap <silent> <F2> <Plug>(lcn-rename)
+
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
 
 " Seconds until language server updates after file changed 
 "let g:LanguageClient_changeThrottle = 1
@@ -130,9 +137,9 @@ set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
 
 " Use wide tabs
-set shiftwidth=8
-set softtabstop=8
-set tabstop=8
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set noexpandtab
 
 " =============================================================================
